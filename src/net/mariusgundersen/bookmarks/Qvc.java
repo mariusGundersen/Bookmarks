@@ -8,7 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.mariusgundersen.bookmarks.domain.Handler;
+import net.mariusgundersen.bookmarks.domain.BookmarkCollection;
+import net.mariusgundersen.bookmarks.domain.BookmarkHandler;
 
 import qvc.JsonEndpoint;
 import qvc.QVC;
@@ -30,7 +31,7 @@ public class Qvc extends HttpServlet {
             qvc = new QVC();
             qvc.addPackage("net.mariusgundersen.bookmarks.domain");
             
-            Handler handler = new Handler();
+            BookmarkHandler handler = new BookmarkHandler(new BookmarkCollection());
             SingletonCommandHandlerFactory commandHandlerFactory = new SingletonCommandHandlerFactory();
             commandHandlerFactory.addHandler(handler);
             SingletonQueryHandlerFactory queryHandlerFactory = new SingletonQueryHandlerFactory();

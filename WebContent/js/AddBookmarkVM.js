@@ -1,4 +1,4 @@
-define(["Bookmark", "ordnung/qvc", "knockout"], function(Bookmark, qvc, ko){
+define(["Bookmark", "ordnung/qvc", "events", "knockout"], function(Bookmark, qvc, proclaim, ko){
 	function AddBookmarkVM(){
 		var self = this;
 		
@@ -10,6 +10,7 @@ define(["Bookmark", "ordnung/qvc", "knockout"], function(Bookmark, qvc, ko){
 			name: self.name,
 			url: self.url
 		}).success(function(){
+			proclaim.aBookmarkIsAdded(self.name(), self.url());
 			self.name("");
 			self.url("");
 		});

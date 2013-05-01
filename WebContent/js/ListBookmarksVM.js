@@ -1,4 +1,4 @@
-define(["Bookmark", "ordnung/qvc", "knockout"], function(Bookmark, qvc, ko){
+define(["Bookmark", "ordnung/qvc", "events", "knockout"], function(Bookmark, qvc, when, ko){
 
 
 	function ListBookmarksVM(){
@@ -23,10 +23,13 @@ define(["Bookmark", "ordnung/qvc", "knockout"], function(Bookmark, qvc, ko){
 			}));
 		});
 		
-		
+		function addTheBookmarkToTheList(name, url){
+			self.addBookmark(url, name);
+		}
 		
 		init: {
 			self.getBookmarks();
+			when.aBookmarkIsAdded(addTheBookmarkToTheList);
 		}
 	}
 	

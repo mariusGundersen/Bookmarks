@@ -18,7 +18,7 @@ public class BookmarkHandler implements CommandHandler, QueryHandler {
 
 
 	public void handle(AddBookmark bookmark){
-		bookmarks.addBookmark(new Bookmark(bookmark.link, bookmark.name));
+		bookmarks.addBookmark(new Bookmark(bookmark.url, bookmark.name));
 	}
 	
 	public List<Bookmark> handle(GetAllBookmarks query){

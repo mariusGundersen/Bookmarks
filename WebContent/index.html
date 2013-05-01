@@ -1,2 +1,34 @@
 <!doctype html>
-<h2>Hello</h2>
+<title>OrdnungJS</title>
+<style>
+.error{
+	color: #D00;
+}
+label{
+	display: block;
+}
+</style>
+<div data-viewmodel="AddBookmarkVM">
+	<label>URL: <span class="error" data-bind="validationMessageFor:url"></span><br>
+	<input data-bind="value:url, valueUpdate:'afterkeydown'" placeholder="enter the url"></label>
+	<label>Title: <span class="error" data-bind="validationMessageFor:name"></span><br>
+	<input data-bind="value:name, valueUpdate:'afterkeydown'" placeholder="enter the name of the link"></label>
+	<button data-bind="command: saveBookmark">Save Bookmark</button><br>
+	
+	<a data-bind="text:name, attr: {href: url}"></a>
+</div>
+
+<div data-viewmodel="ListBookmarksVM">
+	<button data-bind="query: getBookmarks">Get All Bookmarks</button>
+	
+	<label>Filter: <span class="error" data-bind="validationMessageFor:filter"></span><br>
+	<input data-bind="value:filter, valueUpdate:'afterkeydown'" placeholder="filter names"></label>
+	<ul data-bind="foreach: filteredList">
+		<li><a data-bind="text: name, attr:{href: url}"></a></li>
+	</ul>
+	
+	
+</div>
+
+<script src="js/Libs/es5-shim.min.js"></script>
+<script src="js/Libs/require-2.1.1.js" data-main="js/main.js"></script>

@@ -9,13 +9,17 @@ label{
 }
 </style>
 <div data-viewmodel="AddBookmarkVM">
-	<label>URL: <span class="error" data-bind="validationMessageFor:url"></span><br>
-	<input data-bind="value:url, valueUpdate:'afterkeydown'" placeholder="enter the url"></label>
+	
 	<label>Title: <span class="error" data-bind="validationMessageFor:name"></span><br>
 	<input data-bind="value:name, valueUpdate:'afterkeydown'" placeholder="enter the name of the link"></label>
+	
+	
+	<label>URL: <span class="error" data-bind="validationMessageFor:url"></span><br>
+	<input data-bind="value:url, valueUpdate:'afterkeydown'" placeholder="enter the url"></label>
+	
 	<button data-bind="command: saveBookmark">Save Bookmark</button><br>
 	
-	<a data-bind="text:name, attr: {href: url}"></a>
+	<span>Your link: </span><a data-bind="text:name, attr: {href: url}" target="_blank"></a>
 </div>
 
 <div data-viewmodel="ListBookmarksVM">
@@ -24,7 +28,7 @@ label{
 	<label>Filter: <span class="error" data-bind="validationMessageFor:filter"></span><br>
 	<input data-bind="value:filter, valueUpdate:'afterkeydown'" placeholder="filter names"></label>
 	<ul data-bind="foreach: filteredList">
-		<li><a data-bind="text: name, attr:{href: url}"></a></li>
+		<li><a data-bind="text: name, attr:{href: url}" target="_blank"></a></li>
 	</ul>
 	
 	

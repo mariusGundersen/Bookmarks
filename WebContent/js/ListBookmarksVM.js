@@ -7,9 +7,9 @@ define(["Bookmark", "ordnung/qvc", "events", "knockout"], function(Bookmark, qvc
 		this.list = ko.observableArray();
 		this.filter = ko.observable("");
 		this.filteredList = ko.computed(function(){
-			var filter = self.filter();
+			var filter = self.filter().toLowerCase();
 			return self.list().filter(function(item){
-				return item.name.indexOf(filter) >= 0;
+				return item.name.toLowerCase().indexOf(filter) >= 0;
 			});
 		});
 		

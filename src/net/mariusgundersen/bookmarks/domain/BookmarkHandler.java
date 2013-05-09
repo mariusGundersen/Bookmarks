@@ -2,10 +2,9 @@ package net.mariusgundersen.bookmarks.domain;
 
 import java.util.List;
 
-import qvc.handlers.CommandHandler;
-import qvc.handlers.QueryHandler;
+import qvc.handlers.Handler;
 
-public class BookmarkHandler implements CommandHandler, QueryHandler {
+public class BookmarkHandler implements Handler {
 
 	private BookmarkCollection bookmarks;
 	
@@ -23,5 +22,12 @@ public class BookmarkHandler implements CommandHandler, QueryHandler {
 	
 	public List<Bookmark> handle(GetAllBookmarks query){
 		return bookmarks.getAllBookmarks();
+	}
+
+
+
+	@Override
+	public void setSessionId(String sessionId) {
+		// TODO Auto-generated method stub
 	}
 }

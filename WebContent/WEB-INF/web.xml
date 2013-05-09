@@ -14,7 +14,7 @@
 	</welcome-file-list>
 	<servlet>
 		<servlet-name>QVC</servlet-name>
-		<servlet-class>net.mariusgundersen.bookmarks.Qvc</servlet-class>
+		<servlet-class>net.mariusgundersen.bookmarks.QvcServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>QVC</servlet-name>

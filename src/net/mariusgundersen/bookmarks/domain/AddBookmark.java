@@ -8,7 +8,7 @@ public class AddBookmark extends Command {
 	
 
 	@NotEmpty(message="You must enter a url")
-	@Pattern(regexp="^https://.*", flags = {Pattern.Flag.CASE_INSENSITIVE, Pattern.Flag.MULTILINE}, message="The url must start with http(s)://")
+	@Pattern(regexp="^http(s?)://.*", flags = {Pattern.Flag.CASE_INSENSITIVE}, message="The url must start with http(s)://")
 	public final String url;
 	
 	

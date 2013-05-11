@@ -9,7 +9,8 @@ require.config({
 
 require(["ordnung/qvc", "ordnung/loader"], function(qvc, load){
 	qvc.config({
-		baseUrl: "qvc"
+		baseUrl: "qvc",
+		csrf: document.querySelector("meta[name=csrfToken]").getAttribute("content")
 	});
 	
 	load();

@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import net.mariusgundersen.bookmarks.domain.BookmarkCollection;
 
@@ -29,7 +30,7 @@ public class QvcServlet extends HttpServlet {
 	    try {
 	    	
 	        qvc = new QVC();
-	        qvc.setHandleFactory(new BookmarkHandlerFactory(new BookmarkCollection()));
+	        qvc.setHandleFactory(new BookmarkHandlerFactory());
 	        qvc.addPackage("net.mariusgundersen.bookmarks.domain");
 			qvc.loadCommandsAndQueries();
 			
@@ -47,6 +48,7 @@ public class QvcServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
 		String[] path = request.getPathInfo().substring(1).split("/");
+		String sessionId = request.getSession().getId();
 		
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setContentType("text/json");
@@ -58,11 +60,23 @@ public class QvcServlet extends HttpServlet {
 			String type = path[0];
 			String name = path[1];
 			String parameters = request.getParameter("parameters");
-	
-			pw.print(execute(type, name, parameters));
+			if(csrfTokenIsCorrect(type, request.getParameter("csrfToken"), request.getSession()))
+				pw.print(execute(type, name, parameters, sessionId));
+			else
+				pw.print("{\"error\":\"wrong csrfToken\"}");
 		}
 	}
 	
+	private boolean csrfTokenIsCorrect(String type, String csrfToken, HttpSession httpSession) {
+		switch(type){
+			case "command":
+			case "query":
+				return csrfToken.equals(httpSession.getAttribute("csrfToken"));
+			default:
+				return true;
+		}
+	}
+
 	@Override
 	protected void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setStatus(204);
@@ -73,26 +87,34 @@ public class QvcServlet extends HttpServlet {
 		response.setContentLength(0);
 	}
 	
-	protected String execute(String type, String name, String parameters){
+	protected String execute(String type, String name, String parameters, String sessionId){
 		switch(type){
-			case "command": return endpoint.command(name, parameters);
-			case "query": return endpoint.query(name, parameters);
-			case "constraints": return endpoint.constraints(name);
-			default: return "{\"error\": \"unknown type\"}";
+			case "command": 
+				return endpoint.command(name, parameters, sessionId);
+			case "query": 
+				return endpoint.query(name, parameters, sessionId);
+			case "constraints": 
+				return endpoint.constraints(name);
+			default: 
+				return "{\"error\": \"unknown type\"}";
 		}
 	}
 	
 	public class BookmarkHandlerFactory implements HandlerFactory{
+		
+		private SessionStore<BookmarkCollection> sessionStore;
 
-		private BookmarkCollection bookmarkCollection;
-
-		public BookmarkHandlerFactory(BookmarkCollection bookmarkCollection) {
-			this.bookmarkCollection = bookmarkCollection;
+		public BookmarkHandlerFactory() {
+			this.sessionStore = new SessionStore<BookmarkCollection>() {
+				protected BookmarkCollection createSessionObject() {
+					return new BookmarkCollection();
+				}
+			};
 		}
 
 		@Override
-		public Handler create(Class<? extends Handler> handlerClass, String sessionId) throws Exception {
-			Handler handler = handlerClass.getConstructor(BookmarkCollection.class).newInstance(bookmarkCollection);
+		public Handler create(Class<? extends Handler> handlerClass, String sessionId) throws Exception {			
+			Handler handler = handlerClass.getConstructor(BookmarkCollection.class).newInstance(sessionStore.getSessionObject(sessionId));
 			handler.setSessionId(sessionId);
 			return handler;
 		}

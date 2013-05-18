@@ -28,5 +28,10 @@
   		<artifactId>QVC</artifactId>
   		<version>0.3.0</version>
   	</dependency>
+  	<dependency>
+  		<groupId>com.thetransactioncompany</groupId>
+  		<artifactId>cors-filter</artifactId>
+  		<version>1.6</version>
+  	</dependency>
   </dependencies>
 </project>

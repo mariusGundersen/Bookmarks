@@ -50,7 +50,6 @@ public class QvcServlet extends HttpServlet {
 		String[] path = request.getPathInfo().substring(1).split("/");
 		String sessionId = request.getSession().getId();
 		
-		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setContentType("text/json");
 		PrintWriter pw = response.getWriter();
 		
@@ -75,16 +74,6 @@ public class QvcServlet extends HttpServlet {
 			default:
 				return true;
 		}
-	}
-
-	@Override
-	protected void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setStatus(204);
-		response.setHeader("access-control-allow-origin", "*");
-		response.setHeader("access-control-allow-methods", "GET, POST, PUT, DELETE, OPTIONS");
-		response.setHeader("access-control-allow-headers", "content-type, accept");
-		response.setIntHeader("access-control-max-age", 10); // Seconds.
-		response.setContentLength(0);
 	}
 	
 	protected String execute(String type, String name, String parameters, String sessionId){

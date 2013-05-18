@@ -21,6 +21,6 @@ public class BookmarkHandler implements Handler {
 	
 	
 	public void handle(AddBookmark bookmark){
-		bookmarks.addBookmark(new Bookmark(bookmark.url, bookmark.name));
+		bookmarks.addBookmark(new Bookmark(bookmark.url, bookmark.title));
 	}
 }

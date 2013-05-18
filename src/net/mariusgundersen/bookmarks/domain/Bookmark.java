@@ -2,12 +2,12 @@ package net.mariusgundersen.bookmarks.domain;
 
 public class Bookmark {
 	public final String url;
-	public final String name;
+	public final String title;
 	
 	
-	public Bookmark(String url, String name) {
+	public Bookmark(String url, String title) {
 		this.url = url;
-		this.name = name;
+		this.title = title;
 	}
 	
 	

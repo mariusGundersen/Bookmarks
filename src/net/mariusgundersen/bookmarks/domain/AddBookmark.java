@@ -4,14 +4,14 @@ import qvc.executables.Command;
 
 public class AddBookmark extends Command {
 
-	public final String name;
+	public final String title;
 	public final String url;
 	
 	
 	
 	
-	public AddBookmark(String name, String url) {
-		this.name = name;
+	public AddBookmark(String title, String url) {
+		this.title = title;
 		this.url = url;
 	}
 }

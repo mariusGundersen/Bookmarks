@@ -1,5 +1,7 @@
 package net.mariusgundersen.bookmarks.domain;
 
+import java.util.List;
+
 import qvc.handlers.Handler;
 
 public class BookmarkHandler implements Handler {
@@ -22,5 +24,9 @@ public class BookmarkHandler implements Handler {
 	
 	public void handle(AddBookmark bookmark){
 		bookmarks.addBookmark(new Bookmark(bookmark.url, bookmark.title));
+	}
+	
+	public List<Bookmark> handle(GetAllBookmarks query){
+		return bookmarks.getAllBookmarks();
 	}
 }

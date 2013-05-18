@@ -48,7 +48,7 @@ public class QvcServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
 		String[] path = request.getPathInfo().substring(1).split("/");
-		String sessionId = request.getSession().getId();
+		String sessionId = "abc";//request.getSession().getId();
 		
 		response.setContentType("text/json");
 		PrintWriter pw = response.getWriter();
@@ -96,7 +96,8 @@ public class QvcServlet extends HttpServlet {
 		}
 
 		@Override
-		public Handler create(Class<? extends Handler> handlerClass, String sessionId) throws Exception {			
+		public Handler create(Class<? extends Handler> handlerClass, String sessionId) throws Exception {
+			System.out.println(sessionId);
 			Handler handler = handlerClass.getConstructor(BookmarkCollection.class).newInstance(sessionStore.getSessionObject(sessionId));
 			handler.setSessionId(sessionId);
 			return handler;

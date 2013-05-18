@@ -67,13 +67,7 @@ public class QvcServlet extends HttpServlet {
 	}
 	
 	private boolean csrfTokenIsCorrect(String type, String csrfToken, HttpSession httpSession) {
-		switch(type){
-			case "command":
-			case "query":
-				return csrfToken.equals(httpSession.getAttribute("csrfToken"));
-			default:
-				return true;
-		}
+		return true;
 	}
 	
 	protected String execute(String type, String name, String parameters, String sessionId){
